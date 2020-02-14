@@ -56,7 +56,16 @@ call_3rets(int *r2, int *r3, int p1, int p2, int p3)
 	*r3 = p1 - p2 - p3;
 	return;
 }
-
+void
+call_4rets(int *r2, int *r3, int p1, int p2, int p3)
+{
+	PRINTLOG(PRINT_DEBUG, "In call_4rets() in fpu start, client:%lu. args: p1:%d p2:%d p3:%d\n", cos_inv_token(), p1, p2, p3);
+	*r2 = p1 + p2 + p3;
+	*r3 = p1 - p2 - p3;
+	float a = 10 * 0.1f;
+	
+	return;
+}
 void
 cos_init(void)
 {

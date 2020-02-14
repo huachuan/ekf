@@ -24,6 +24,7 @@ void cos_init(void)
 	PRINTLOG(PRINT_DEBUG, "Invoking pong interface w/ multiple-rets:\n");
 	call_3rets(&r1, &r2, a, b, c);
 	PRINTLOG(PRINT_DEBUG, "Returns=> r1: %d, r2: %d\n", r1, r2);
+
 	assert(r1 == (a + b + c));
 	assert(r2 == (a - b - c));
 

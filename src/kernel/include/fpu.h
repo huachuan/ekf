@@ -1,8 +1,8 @@
 #ifndef FPU_H
 #define FPU_H
 
-#include "thread.h"
-
+#include "thd.h"
+#include "per_cpu.h"
 #define FPU_DISABLED_MASK 0x8
 #define FXSR (1 << 24)
 #define HAVE_SSE (1 << 25)
@@ -106,7 +106,7 @@ fpu_init(void)
 	}
 #endif
 
-	fpu_set(FPU_DISABLE);
+	//fpu_set(FPU_DISABLE);
 	*PERCPU_GET(fpu_disabled)  = 1;
 	*PERCPU_GET(fpu_last_used) = NULL;
 
@@ -138,6 +138,7 @@ fpu_thread_init(struct thread *thd)
 #if FPU_SUPPORT_SSE > 0
 	thd->fpu.mxcsr = 0x1f80;
 #endif
+	thd->fpu.status = 0; 
 	return;
 }
 
@@ -257,8 +258,10 @@ fxrstor(struct thread *thd)
 #endif
 	return;
 }
+
 #else
 /* if FPU_DISABLED is not defined, then we use these dummy functions */
+
 static inline int
 fpu_init(void)
 {
