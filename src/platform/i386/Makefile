@@ -47,7 +47,7 @@ OBJS += miniacpi.o
 OBJS += vga.o
 OBJS += exception.o
 OBJS += lapic.o
-#OBJS += fpu.o
+OBJS += fpu.o
 
 COS_OBJ += pgtbl.o
 COS_OBJ += retype_tbl.o
@@ -55,7 +55,7 @@ COS_OBJ += liveness_tbl.o
 COS_OBJ += tcap.o
 COS_OBJ += capinv.o
 COS_OBJ += captbl.o
-COS_OBJ += fpu.o
+#COS_OBJ += fpu.o
 
 DEPS :=$(patsubst %.o, %.d, $(OBJS))
 
@@ -99,9 +99,9 @@ captbl.o: ../../kernel/captbl.c
 	$(info |     [CC]   Compiling $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-fpu.o: ../../kernel/fpu.c
-	$(info |     [CC]   Compiling $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
+#fpu.o: ../../kernel/fpu.c
+#	$(info |     [CC]   Compiling $@)
+#	@$(CC) $(CFLAGS) -c $< -o $@
 
 
 %.o: %.c

@@ -1,6 +1,29 @@
 #include <stdint.h>
 #include "kernel_tests.h"
-
+/**
+Calculate pi
+**/
+static void calculate_pi()
+{
+	double PI = 3;
+	int flag = 1;
+	int i;
+	for (i = 2; i < 100000; i += 2) 
+	{	
+		if (flag) 
+		{
+			PI += (4.0 / (i * (i + 1) * (i + 2)));
+	
+		}
+		else 
+		{
+			PI -= (4.0 / (i * (i + 1) * (i + 2)));
+		}
+		flag = !flag;
+	}
+	PRINTC("\t%lf: \t\t\tSuccess Calculate Pi\n", PI);
+	return;
+}
 static int          failure = 0;
 
 /*
@@ -12,7 +35,8 @@ static void
 test_thd_arg(void *d)
 {
         int ret = 0;
-
+	calculate_pi();
+	PRINTC("\t\t\t\t test_thd_arg\n");
         if (EXPECT_LL_NEQ((int)d, THD_ARG, "Thread Creation: Argument Incorrect")) failure = 1;
         while (1) cos_thd_switch(BOOT_CAPTBL_SELF_INITTHD_CPU_BASE);
         PRINTC("Error, shouldn't get here!\n");
@@ -41,7 +65,8 @@ static void
 thd_fn_mthds_ring(void *d)
 {
         int ret;
-
+	calculate_pi();
+	PRINTC("\t\t\t\t thd_fn_mthds_ring calcuate pi\n");
         if (count != (int) d) cos_thd_switch(BOOT_CAPTBL_SELF_INITTHD_CPU_BASE);
 
         int next = (++count) % TEST_NTHDS;
@@ -93,6 +118,8 @@ static void
 thd_fn_mthds_classic(void *d)
 {
         cos_thd_switch(BOOT_CAPTBL_SELF_INITTHD_CPU_BASE);
+	calculate_pi();
+	PRINTC("\t\t\t\t thd_fn_mthds_classic calcuate pi\n");
 
         while (1) {
                 cos_thd_switch(BOOT_CAPTBL_SELF_INITTHD_CPU_BASE);
@@ -105,6 +132,7 @@ thd_fn_mthds_classic(void *d)
  * The thds will switch between the main thd and it each individual thd back and forth.
  * testing if it switched to the desirable thd at each iteration
  */
+
 
 static void
 test_mthds_classic(void)
@@ -129,6 +157,8 @@ test_mthds_classic(void)
 static void
 thd_tls(void *d)
 {
+	calculate_pi();
+	PRINTC("\t\t\t\t in function thd_tls calculate\n");
         if (EXPECT_LLU_NEQ((long unsigned)tls_get(0), (long unsigned)tls_test[cos_cpuid()][(int)d],
                             "Thread TLS: ARG not correct")) failure = 1;
         while (1) cos_thd_switch(BOOT_CAPTBL_SELF_INITTHD_CPU_BASE);
