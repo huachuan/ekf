@@ -49,10 +49,10 @@ cos_init(void)
        // test_tcap_budgets();
        // test_2timers();
         test_thds();
-        test_mem_alloc();
-        test_async_endpoints();
-        test_inv();
-        test_captbl_expands();
+        //test_mem_alloc();
+        //test_async_endpoints();
+       // test_inv();
+       // test_captbl_expands();
 
         printc("\nuBenchamarks Started:\n\n");
 

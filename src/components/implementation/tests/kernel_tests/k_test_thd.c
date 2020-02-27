@@ -5,7 +5,7 @@ Calculate pi
 **/
 static void calculate_pi()
 {
-	double PI = 3;
+	float PI = 3.0;
 	int flag = 1;
 	int i;
 	for (i = 2; i < 100000; i += 2) 
@@ -65,8 +65,8 @@ static void
 thd_fn_mthds_ring(void *d)
 {
         int ret;
-	calculate_pi();
-	PRINTC("\t\t\t\t thd_fn_mthds_ring calcuate pi\n");
+	//calculate_pi();
+	//PRINTC("\t\t\t\t thd_fn_mthds_ring calcuate pi\n");
         if (count != (int) d) cos_thd_switch(BOOT_CAPTBL_SELF_INITTHD_CPU_BASE);
 
         int next = (++count) % TEST_NTHDS;
@@ -118,8 +118,8 @@ static void
 thd_fn_mthds_classic(void *d)
 {
         cos_thd_switch(BOOT_CAPTBL_SELF_INITTHD_CPU_BASE);
-	calculate_pi();
-	PRINTC("\t\t\t\t thd_fn_mthds_classic calcuate pi\n");
+	//calculate_pi();
+	//PRINTC("\t\t\t\t thd_fn_mthds_classic calcuate pi\n");
 
         while (1) {
                 cos_thd_switch(BOOT_CAPTBL_SELF_INITTHD_CPU_BASE);
@@ -157,8 +157,8 @@ test_mthds_classic(void)
 static void
 thd_tls(void *d)
 {
-	calculate_pi();
-	PRINTC("\t\t\t\t in function thd_tls calculate\n");
+	//calculate_pi();
+	//PRINTC("\t\t\t\t in function thd_tls calculate\n");
         if (EXPECT_LLU_NEQ((long unsigned)tls_get(0), (long unsigned)tls_test[cos_cpuid()][(int)d],
                             "Thread TLS: ARG not correct")) failure = 1;
         while (1) cos_thd_switch(BOOT_CAPTBL_SELF_INITTHD_CPU_BASE);

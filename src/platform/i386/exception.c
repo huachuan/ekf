@@ -79,9 +79,10 @@ int
 device_not_avail_fault_handler(struct pt_regs *regs)
 {
 	print_regs_state(regs);
-	die("FAULT: Device Not Available\n");
-
-	return 1;
+	//die("FAULT: Device Not Available\n");
+	printk("\n\n\n\n Device not avail fault use fpu exception handler \n\n\n");
+	return fpu_disabled_exception_handler();
+	//return 1;
 }
 
 int

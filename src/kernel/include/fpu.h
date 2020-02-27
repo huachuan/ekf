@@ -35,8 +35,7 @@ static inline int  fpu_thread_uses_fp(struct thread *thd);
 /* packed low level (assemmbly) functions */
 static inline void          fxsave(struct thread *);
 static inline void          fxrstor(struct thread *);
-//static inline unsigned long fpu_read_cr0(void);
-static inline u32_t fpu_read_cr0(void);
+static inline unsigned long fpu_read_cr0(void);
 static inline void          fpu_set(int);
 static inline int           fpu_get_info(void);
 static inline int           fpu_check_fxsr(void);
@@ -107,7 +106,9 @@ fpu_init(void)
 		return -1;
 	}
 #endif
+	printk("\n\n\n FPU_init() *************** \n\n\n");
 	fpu_set(FPU_DISABLE);
+	printk("\n\n\n FPU_DISABLED");
 	*PERCPU_GET(fpu_disabled)  = 1;
 	*PERCPU_GET(fpu_last_used) = NULL;
 
@@ -217,11 +218,10 @@ fpu_thread_uses_fp(struct thread *thd)
 	return thd->fpu.status;
 }
 
-static inline unsigned int
+static inline unsigned long
 fpu_read_cr0(void)
 {
-	//unsigned long val;
-	u32_t   	val;
+	unsigned long val;
 	asm volatile("mov %%cr0, %0" : "=r"(val));
 	return val;
 }
@@ -229,14 +229,13 @@ fpu_read_cr0(void)
 static inline void
 fpu_set(int status)
 {
-	//unsigned long val, cr0;
-	
-	u32_t   	val, cr0;
+	unsigned long val, cr0;
 	cr0 = fpu_read_cr0();
+	printk("COS KERNEL BEFORE UPDATE CR0: %llu \n", fpu_read_cr0());
 	val = status ? (cr0 & ~FPU_DISABLED_MASK)
 	             : (cr0 | FPU_DISABLED_MASK); // ENABLE(status == 1) : DISABLE(status == 0)
 	asm volatile("mov %0, %%cr0" : : "r"(val));
-	printk("COS KERNEL UPDATE CR0: %llu \n", fpu_read_cr0());
+	printk("COS KERNEL AFTER UPDATE CR0: %llu \n", fpu_read_cr0());
 	return;
 }
 
@@ -315,7 +314,7 @@ fxrstor(struct thread *thd)
 {
 	return;
 }
-static inline u32_t
+static inline unsigned long
 fpu_read_cr0(void)
 {
 	return 0;
