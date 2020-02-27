@@ -45,9 +45,9 @@ cos_init(void)
 
         /* Kernel Tests */
         cyc_per_usec = cos_hw_cycles_per_usec(BOOT_CAPTBL_SELF_INITHW_BASE);
-        test_timer();
-        test_tcap_budgets();
-        test_2timers();
+       // test_timer();
+       // test_tcap_budgets();
+       // test_2timers();
         test_thds();
         test_mem_alloc();
         test_async_endpoints();
@@ -56,7 +56,7 @@ cos_init(void)
 
         printc("\nuBenchamarks Started:\n\n");
 
-        test_run_perf_kernel();
+ //       test_run_perf_kernel();
 
         /* NOTE: This is just to make sense of the output on HW! To understand that microbooter runs to completion on all cores! */
         test_done[cos_cpuid()] = 1;

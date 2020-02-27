@@ -45,7 +45,7 @@ test_timer(void)
         thdid_t     tid;
         int         blocked, rcvd;
         cycles_t    cycles, now, utime;
-        long long   time, mask;
+        long 	    time, mask;
         tcap_time_t timer, thd_timeout;
 
         tc = cos_thd_alloc(&booter_info, booter_info.comp_cap, spinner, NULL);
@@ -60,15 +60,15 @@ test_timer(void)
                 p = c;
                 rdtscll(c);
                 time = (c - now - (cycles_t)(GRANULARITY * cyc_per_usec));
-                mask = (time >> (sizeof(long long) * CHAR_BIT - 1));
+                mask = (time >> (sizeof(long) * CHAR_BIT - 1));
                 utime = (time + mask) ^ mask;
 
                 if (i > 0) {
                         perfdata_add(&result, utime);
 
-                        if (EXPECT_LLU_LT((long long unsigned)(c-now), (unsigned)(GRANULARITY * cyc_per_usec * MAX_THDS),
+                        if (EXPECT_LLU_LT((long unsigned)(c-now), (unsigned)(GRANULARITY * cyc_per_usec * MAX_THDS),
                                             "Timer: Failure on  MAX") ||
-                                EXPECT_LLU_LT((unsigned)(GRANULARITY * cyc_per_usec * MIN_THDS), (long long unsigned)(c-now),
+                                EXPECT_LLU_LT((unsigned)(GRANULARITY * cyc_per_usec * MIN_THDS), (long unsigned)(c-now),
                                             "Timer: failure on MIN")) {
                                 return;
                         }
@@ -112,7 +112,7 @@ test_timer(void)
         p = c;
         rdtscll(c);
 
-        if (EXPECT_LLU_LT((long long unsigned)(c-p), (unsigned)(GRANULARITY * cyc_per_usec), "Timer:  Now")) {
+        if (EXPECT_LLU_LT((long unsigned)(c-p), (unsigned)(GRANULARITY * cyc_per_usec), "Timer:  Now")) {
                 return;
         }
 
@@ -120,7 +120,7 @@ test_timer(void)
                       &rcvd, &tid, &blocked, &cycles, &thd_timeout)
                         ;
 
-        EXPECT_LLU_LT((long long unsigned)cycles, (long long unsigned)(c-p), "Timer => Cycles time");
+        EXPECT_LLU_LT((long unsigned)cycles, (long unsigned)(c-p), "Timer => Cycles time");
 
         sched_events_clear();
         PRINTC("\t%s: \t\t\tSuccess\n", "One-Shot Timeout");
@@ -285,9 +285,9 @@ test_tcap_budgets_single(void)
 
                         perfdata_add(&result, time);
 
-                        if (EXPECT_LLU_LT((long long unsigned)(e-s), (unsigned)(GRANULARITY * BUDGET_TIME * MAX_THDS),
+                        if (EXPECT_LLU_LT((long unsigned)(e-s), (unsigned)(GRANULARITY * BUDGET_TIME * MAX_THDS),
                                           "Single Budget: MAX Bound") ||
-                                EXPECT_LLU_LT((unsigned)(GRANULARITY * BUDGET_TIME * MIN_THDS), (long long unsigned)(e-s),
+                                EXPECT_LLU_LT((unsigned)(GRANULARITY * BUDGET_TIME * MIN_THDS), (long unsigned)(e-s),
                                                "Single Budget: MIN Bound")) {
                                 return;
                         }

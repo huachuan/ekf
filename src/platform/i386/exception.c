@@ -124,9 +124,10 @@ int
 gen_protect_fault_handler(struct pt_regs *regs)
 {
 	print_regs_state(regs);
-	die("FAULT: General Protection Fault\n");
-
-	return 1;
+	//die("FAULT: General Protection Fault\n");
+	printk("\n\n\n\n General protection fault use fpu exception handler \n\n\n");
+	return fpu_disabled_exception_handler();
+	//return 1;
 }
 
 int
@@ -154,7 +155,7 @@ x87_float_pt_except_fault_handler(struct pt_regs *regs)
 {
 	print_regs_state(regs);
 	//die("FAULT: x87 Floating-point Exception\n");
-
+	printk("/n EXCEPTION HANDLER WORKING ******** /n/n/n");
 	//return 1;
 	return fpu_disabled_exception_handler();
 }

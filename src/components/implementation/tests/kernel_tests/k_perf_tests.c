@@ -115,7 +115,7 @@ async_thd_parent_perf(void *thdcap)
         thdcap_t  tc = (thdcap_t)thdcap;
         asndcap_t sc = scp_global[cos_cpuid()];
         arcvcap_t rc = rcc_global[cos_cpuid()];
-        long long e = 0, s = 0;
+        long 	  e = 0, s = 0;
         int           i, pending = 0;
 
         perfdata_init(&pd[cos_cpuid()], "Async Endpoints => Roundtrip", test_results, ARRAY_SIZE);
