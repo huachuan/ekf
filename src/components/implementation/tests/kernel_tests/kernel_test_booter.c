@@ -45,14 +45,14 @@ cos_init(void)
 
         /* Kernel Tests */
         cyc_per_usec = cos_hw_cycles_per_usec(BOOT_CAPTBL_SELF_INITHW_BASE);
-       // test_timer();
-       // test_tcap_budgets();
-       // test_2timers();
+        test_timer();
+        test_tcap_budgets();
+        test_2timers();
         test_thds();
-        //test_mem_alloc();
-        //test_async_endpoints();
-       // test_inv();
-       // test_captbl_expands();
+        test_mem_alloc();
+        test_async_endpoints();
+       	test_inv();
+       	test_captbl_expands();
 
         printc("\nuBenchamarks Started:\n\n");
 
